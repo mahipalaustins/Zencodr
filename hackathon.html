@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZENCODR Hackathon Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #121929;
+            --card-bg: rgba(18, 25, 41, 0.7);
+            --accent: #00d4ff;
+            --accent-secondary: #ff00ff;
+            --accent-tertiary: #00ff88;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e1a 0%, #121929 50%, #0f1729 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            animation: bgPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-input {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            color: var(--text-primary);
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            width: 250px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .notification-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .profile-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.5rem;
+            min-width: 200px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            display: none;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-item i {
+            color: var(--text-secondary);
+            width: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--glass-border);
+            padding: 2rem 0;
+            z-index: 50;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-link.active {
+            color: var(--accent);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .sidebar-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border-radius: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        /* Hackathon Carousel */
+        .hackathon-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .hackathon-carousel {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .hackathon-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .hackathon-card {
+            min-width: 350px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            margin-right: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .hackathon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+        }
+
+        .hackathon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .hackathon-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .hackathon-organizer {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .hackathon-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .meta-item i {
+            color: var(--accent);
+        }
+
+        .hackathon-themes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .theme-tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hackathon-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .carousel-btn {
+            background: var(--glass-bg);
+            border: none;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* News Feed */
+        .news-feed {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .news-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-icon {
+            color: var(--accent);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .news-content h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .news-content p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .news-date {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Team Finder Section */
+        .team-finder {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+        }
+
+        .team-finder-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-finder-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .team-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .team-post {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .post-time {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .post-content {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .post-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--secondary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Resources Section */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .resource-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .resource-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* Past Winners Section */
+        .winners-slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .winners-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .winner-card {
+            min-width: 300px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            margin-right: 1.5rem;
+        }
+
+        .winner-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .winner-trophy {
+            color: #FCD34D;
+            font-size: 1.25rem;
+        }
+
+        .winner-event {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .winner-year {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .winner-project {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .winner-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .winner-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .slider-btn {
+            background: var(--glass-bg);
+            border: none;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Host Hackathon Form */
+        .host-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            padding: 1.5rem 2rem 1rem;
+            margin-top: 2rem;
+            margin-left: 250px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.35rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Design */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            footer {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .search-input {
+                width: 150px;
+            }
+
+            .search-input:focus {
+                width: 180px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .hackathon-container {
+                grid-template-columns: 1fr;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-finder-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hackathon Detail Modal */
+        .hackathon-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .hackathon-detail-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            margin: 2rem auto;
+        }
+
+        .hackathon-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .hackathon-detail-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hackathon-detail-organizer {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .hackathon-detail-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hackathon-detail-info {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .hackathon-detail-info h4 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hackathon-detail-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hackathon-detail-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hackathon-detail-meta-item i {
+            color: var(--accent);
+            font-size: 1.25rem;
+            width: 24px;
+        }
+
+        .hackathon-detail-description {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .hackathon-detail-description h4 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hackathon-detail-description p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .hackathon-detail-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            ZENCODR
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Collab Rooms</a>
+            <a href="#" class="nav-link">Projects</a>
+            <a href="#" class="nav-link">Mentorship</a>
+            <a href="#" class="nav-link active">Hackathon Hub</a>
+        </div>
+        <div class="header-actions">
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search hackathons...">
+            </div>
+            <button class="notification-btn" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <div class="user-profile">
+                <button class="profile-btn" id="profileBtn">
+                    <div class="profile-avatar">U</div>
+                    <span>User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>My Achievements</span>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-code"></i> ZENCODR
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-users"></i>
+                    <span>Collab Rooms</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Mentorship</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link active">
+                    <i class="fas fa-rocket"></i>
+                    <span>Hackathon Hub</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">ZENCODR Hackathon Hub</h1>
+            <p class="page-subtitle">Explore upcoming hackathons, compete, innovate, and build the future together.</p>
+        </div>
+
+        <!-- Upcoming Hackathons Section -->
+        <section id="upcoming">
+            <div class="section-header">
+                <i class="fas fa-rocket section-icon"></i>
+                <h2 class="section-title">Upcoming Hackathons</h2>
+            </div>
+
+            <div class="hackathon-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="online">Online</button>
+                <button class="filter-btn" data-filter="offline">Offline</button>
+                <button class="filter-btn" data-filter="hybrid">Hybrid</button>
+                <button class="filter-btn" data-filter="beginner">Beginner</button>
+                <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                <button class="filter-btn" data-filter="advanced">Advanced</button>
+            </div>
+
+            <div class="hackathon-carousel">
+                <div class="hackathon-container" id="hackathonContainer">
+                    <!-- Hackathon Card 1 -->
+                    <div class="hackathon-card" data-mode="online" data-difficulty="intermediate" data-id="1">
+                        <h3 class="hackathon-title">AI Innovation Challenge</h3>
+                        <p class="hackathon-organizer">TechCorp India</p>
+                        <div class="hackathon-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Oct 15-17, 2023</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-globe"></i>
+                                <span>Online</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>₹8,30,000</span>
+                            </div>
+                        </div>
+                        <div class="hackathon-themes">
+                            <span class="theme-tag">AI</span>
+                            <span class="theme-tag">Machine Learning</span>
+                            <span class="theme-tag">Open Innovation</span>
+                        </div>
+                        <div class="hackathon-actions">
+                            <button class="btn btn-small view-details">View Details</button>
+                            <button class="btn btn-secondary btn-small register-btn">Register</button>
+                        </div>
+                    </div>
+
+                    <!-- Hackathon Card 2 -->
+                    <div class="hackathon-card" data-mode="offline" data-difficulty="beginner" data-id="2">
+                        <h3 class="hackathon-title">Web3 Builders Weekend</h3>
+                        <p class="hackathon-organizer">Blockchain Academy</p>
+                        <div class="hackathon-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Nov 5-6, 2023</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bangalore</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>₹5,00,000</span>
+                            </div>
+                        </div>
+                        <div class="hackathon-themes">
+                            <span class="theme-tag">Web3</span>
+                            <span class="theme-tag">Blockchain</span>
+                            <span class="theme-tag">DeFi</span>
+                        </div>
+                        <div class="hackathon-actions">
+                            <button class="btn btn-small view-details">View Details</button>
+                            <button class="btn btn-secondary btn-small register-btn">Register</button>
+                        </div>
+                    </div>
+
+                    <!-- Hackathon Card 3 -->
+                    <div class="hackathon-card" data-mode="hybrid" data-difficulty="advanced" data-id="3">
+                        <h3 class="hackathon-title">Sustainability Hack</h3>
+                        <p class="hackathon-organizer">GreenTech Initiative</p>
+                        <div class="hackathon-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Nov 18-20, 2023</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Hybrid</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>₹12,50,000</span>
+                            </div>
+                        </div>
+                        <div class="hackathon-themes">
+                            <span class="theme-tag">Sustainability</span>
+                            <span class="theme-tag">Climate Tech</span>
+                            <span class="theme-tag">IoT</span>
+                        </div>
+                        <div class="hackathon-actions">
+                            <button class="btn btn-small view-details">View Details</button>
+                            <button class="btn btn-secondary btn-small register-btn">Register</button>
+                        </div>
+                    </div>
+
+                    <!-- Hackathon Card 4 -->
+                    <div class="hackathon-card" data-mode="online" data-difficulty="beginner" data-id="4">
+                        <h3 class="hackathon-title">Student Innovation Fest</h3>
+                        <p class="hackathon-organizer">EduTech Foundation</p>
+                        <div class="hackathon-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Dec 2-3, 2023</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-globe"></i>
+                                <span>Online</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>₹3,00,000</span>
+                            </div>
+                        </div>
+                        <div class="hackathon-themes">
+                            <span class="theme-tag">Education</span>
+                            <span class="theme-tag">Student Innovation</span>
+                            <span class="theme-tag">Accessibility</span>
+                        </div>
+                        <div class="hackathon-actions">
+                            <button class="btn btn-small view-details">View Details</button>
+                            <button class="btn btn-secondary btn-small register-btn">Register</button>
+                        </div>
+                    </div>
+
+                    <!-- Hackathon Card 5 -->
+                    <div class="hackathon-card" data-mode="offline" data-difficulty="intermediate" data-id="5">
+                        <h3 class="hackathon-title">FinTech Revolution</h3>
+                        <p class="hackathon-organizer">Finance Innovation Lab</p>
+                        <div class="hackathon-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Dec 10-12, 2023</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Mumbai</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>₹7,50,000</span>
+                            </div>
+                        </div>
+                        <div class="hackathon-themes">
+                            <span class="theme-tag">FinTech</span>
+                            <span class="theme-tag">Payments</span>
+                            <span class="theme-tag">Banking</span>
+                        </div>
+                        <div class="hackathon-actions">
+                            <button class="btn btn-small view-details">View Details</button>
+                            <button class="btn btn-secondary btn-small register-btn">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prevHackathon">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn" id="nextHackathon">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Hackathon News & Announcements -->
+        <section id="news">
+            <div class="section-header">
+                <i class="fas fa-bullhorn section-icon"></i>
+                <h2 class="section-title">Hackathon News & Announcements</h2>
+            </div>
+
+            <div class="news-feed">
+                <div class="news-item">
+                    <div class="news-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="news-content">
+                        <h4>New Hackathon: Robotics Challenge 2023</h4>
+                        <p>Registration is now open for the annual Robotics Challenge happening in December.</p>
+                        <div class="news-date">2 hours ago</div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="news-content">
+                        <h4>Deadline Reminder: AI Innovation Challenge</h4>
+                        <p>Only 3 days left to register for the AI Innovation Challenge starting next week.</p>
+                        <div class="news-date">1 day ago</div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="news-content">
+                        <h4>Winners Announced: CodeFest 2023</h4>
+                        <p>Congratulations to Team Innovators for winning the first place at CodeFest 2023!</p>
+                        <div class="news-date">3 days ago</div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="news-content">
+                        <h4>New Sponsor: TechCorp joins Web3 Builders Weekend</h4>
+                        <p>TechCorp has joined as a platinum sponsor for the upcoming Web3 Builders Weekend.</p>
+                        <div class="news-date">5 days ago</div>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="news-content">
+                        <h4>Major Prize Pool: Sustainability Hack</h4>
+                        <p>The prize pool for Sustainability Hack has been increased to ₹12,50,000!</p>
+                        <div class="news-date">1 week ago</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Finder / Community Zone -->
+        <section id="team-finder">
+            <div class="section-header">
+                <i class="fas fa-users section-icon"></i>
+                <h2 class="section-title">Find Your Team</h2>
+            </div>
+
+            <div class="team-finder">
+                <div class="team-finder-header">
+                    <h3>Looking for Teammates</h3>
+                    <button class="btn" id="postBtn">
+                        <i class="fas fa-plus"></i>
+                        Post: I'm looking for teammates
+                    </button>
+                </div>
+
+                <div class="team-posts">
+                    <div class="team-post">
+                        <div class="post-header">
+                            <span class="post-author">Alex Johnson</span>
+                            <span class="post-time">2 hours ago</span>
+                        </div>
+                        <p class="post-content">Looking for a frontend developer and UI/UX designer for the upcoming AI Innovation Challenge. I'll handle the backend and ML models.</p>
+                        <div class="post-skills">
+                            <span class="skill-tag">Backend</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">ML</span>
+                        </div>
+                    </div>
+
+                    <div class="team-post">
+                        <div class="post-header">
+                            <span class="post-author">Priya Sharma</span>
+                            <span class="post-time">5 hours ago</span>
+                        </div>
+                        <p class="post-content">Forming a team for Web3 Builders Weekend. Need a blockchain developer and a business/marketing person. I'm a frontend developer with React experience.</p>
+                        <div class="post-skills">
+                            <span class="skill-tag">Frontend</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Web3</span>
+                        </div>
+                    </div>
+
+                    <div class="team-post">
+                        <div class="post-header">
+                            <span class="post-author">Rahul Mehta</span>
+                            <span class="post-time">1 day ago</span>
+                        </div>
+                        <p class="post-content">Complete team of 4 looking for one more member for Sustainability Hack. We need someone with IoT or hardware experience.</p>
+                        <div class="post-skills">
+                            <span class="skill-tag">Full Team</span>
+                            <span class="skill-tag">IoT</span>
+                            <span class="skill-tag">Hardware</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hackathon Preparation Resources -->
+        <section id="resources">
+            <div class="section-header">
+                <i class="fas fa-book section-icon"></i>
+                <h2 class="section-title">Hackathon Preparation Resources</h2>
+            </div>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="resource-title">How to Form a Winning Team</h3>
+                    <p class="resource-description">Learn the secrets to assembling a balanced team with complementary skills for hackathon success.</p>
+                    <a href="#" class="btn btn-secondary btn-small">Read Article</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-presentation"></i>
+                    </div>
+                    <h3 class="resource-title">How to Pitch Your Idea</h3>
+                    <p class="resource-description">Master the art of presenting your hackathon project to judges with confidence and clarity.</p>
+                    <a href="#" class="btn btn-secondary btn-small">Read Article</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="resource-title">Best Tools to Use in Hackathons</h3>
+                    <p class="resource-description">Discover the essential tools, frameworks, and platforms that can help you build faster and better.</p>
+                    <a href="#" class="btn btn-secondary btn-small">Read Article</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="resource-title">Past Winning Project Case Studies</h3>
+                    <p class="resource-description">Analyze successful hackathon projects to understand what makes them stand out to judges.</p>
+                    <a href="#" class="btn btn-secondary btn-small">View Case Studies</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="resource-title">Video Tutorials</h3>
+                    <p class="resource-description">Watch expert-led tutorials on various technologies and approaches commonly used in hackathons.</p>
+                    <a href="#" class="btn btn-secondary btn-small">Watch Videos</a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="resource-title">Idea Generation Techniques</h3>
+                    <p class="resource-description">Learn creative methods to brainstorm and develop innovative ideas for your next hackathon.</p>
+                    <a href="#" class="btn btn-secondary btn-small">Read Article</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Past Hackathons & Winners Showcase -->
+        <section id="winners">
+            <div class="section-header">
+                <i class="fas fa-trophy section-icon"></i>
+                <h2 class="section-title">Past Hackathons & Winners Showcase</h2>
+            </div>
+
+            <div class="winners-slider">
+                <div class="winners-container" id="winnersContainer">
+                    <div class="winner-card">
+                        <div class="winner-header">
+                            <i class="fas fa-trophy winner-trophy"></i>
+                            <span class="winner-event">CodeFest 2023</span>
+                            <span class="winner-year">• 2023</span>
+                        </div>
+                        <h4 class="winner-project">EcoTrack</h4>
+                        <p class="winner-description">A sustainability tracking app that helps users monitor and reduce their carbon footprint through daily activities.</p>
+                        <a href="#" class="winner-link">View Project <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="winner-card">
+                        <div class="winner-header">
+                            <i class="fas fa-trophy winner-trophy"></i>
+                            <span class="winner-event">AI Summit 2023</span>
+                            <span class="winner-year">• 2023</span>
+                        </div>
+                        <h4 class="winner-project">MediScan AI</h4>
+                        <p class="winner-description">An AI-powered medical imaging tool that assists doctors in detecting early signs of diseases from X-rays and MRIs.</p>
+                        <a href="#" class="winner-link">View Project <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="winner-card">
+                        <div class="winner-header">
+                            <i class="fas fa-trophy winner-trophy"></i>
+                            <span class="winner-event">Web3 Builders 2022</span>
+                            <span class="winner-year">• 2022</span>
+                        </div>
+                        <h4 class="winner-project">DeFiLearn</h4>
+                        <p class="winner-description">An educational platform that teaches users about decentralized finance through interactive simulations and real-world examples.</p>
+                        <a href="#" class="winner-link">View Project <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="winner-card">
+                        <div class="winner-header">
+                            <i class="fas fa-trophy winner-trophy"></i>
+                            <span class="winner-event">Student Innovate 2022</span>
+                            <span class="winner-year">• 2022</span>
+                        </div>
+                        <h4 class="winner-project">StudyBuddy</h4>
+                        <p class="winner-description">A collaborative study platform that connects students based on their courses and learning preferences for group study sessions.</p>
+                        <a href="#" class="winner-link">View Project <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-controls">
+                <button class="slider-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Host a Hackathon Section -->
+        <section id="host">
+            <div class="section-header">
+                <i class="fas fa-plus-circle section-icon"></i>
+                <h2 class="section-title">Host a Hackathon</h2>
+            </div>
+
+            <div class="host-form">
+                <form id="hostForm">
+                    <div class="form-group">
+                        <label class="form-label" for="organizerName">Organizer Name</label>
+                        <input type="text" id="organizerName" class="form-input" placeholder="Your organization or company name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="eventType">Event Type</label>
+                        <select id="eventType" class="form-select" required>
+                            <option value="">Select event type</option>
+                            <option value="university">University Hackathon</option>
+                            <option value="corporate">Corporate Hackathon</option>
+                            <option value="community">Community Hackathon</option>
+                            <option value="school">School Hackathon</option>
+                            <option value="startup">Startup Event</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="participants">Expected Participants</label>
+                        <input type="number" id="participants" class="form-input" placeholder="Number of expected participants" min="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="duration">Duration</label>
+                        <select id="duration" class="form-select" required>
+                            <option value="">Select duration</option>
+                            <option value="1day">1 Day</option>
+                            <option value="2days">2 Days</option>
+                            <option value="3days">3 Days</option>
+                            <option value="1week">1 Week</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contact">Contact Information</label>
+                        <input type="email" id="contact" class="form-input" placeholder="Your email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="description">Event Description (Optional)</label>
+                        <textarea id="description" class="form-textarea" placeholder="Brief description of your hackathon"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Submit Your Hackathon</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>ZENCODR</h3>
+                <p>The ultimate platform for hackathon enthusiasts.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#upcoming">Upcoming Hackathons</a></li>
+                    <li><a href="#news">News & Announcements</a></li>
+                    <li><a href="#team-finder">Find Your Team</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#winners">Past Winners</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>For Organizers</h3>
+                <ul class="footer-links">
+                    <li><a href="#host">Host a Hackathon</a></li>
+                    <li><a href="#">Organizer Guidelines</a></li>
+                    <li><a href="#">Sponsorship Opportunities</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Community</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Join Discord</a></li>
+                    <li><a href="#">Forums</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 ZENCODR Hackathon Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Team Post -->
+    <div class="modal" id="teamPostModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3>Post: I'm looking for teammates</h3>
+            <form id="teamPostForm">
+                <div class="form-group">
+                    <label class="form-label" for="postContent">What are you looking for?</label>
+                    <textarea id="postContent" class="form-textarea" placeholder="Describe what skills you're looking for and what hackathon you're planning to join..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="postSkills">Your Skills</label>
+                    <input type="text" id="postSkills" class="form-input" placeholder="e.g., Frontend, React, UI/UX Design" required>
+                </div>
+                <button type="submit" class="btn">Post</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Hackathon Details -->
+    <div class="hackathon-detail-modal" id="hackathonDetailModal">
+        <div class="hackathon-detail-content">
+            <button class="modal-close" id="hackathonDetailClose">&times;</button>
+            <div class="hackathon-detail-header">
+                <div>
+                    <h2 class="hackathon-detail-title" id="detailTitle">Hackathon Title</h2>
+                    <p class="hackathon-detail-organizer" id="detailOrganizer">Organizer Name</p>
+                </div>
+            </div>
+            
+            <div class="hackathon-detail-body">
+                <div class="hackathon-detail-info">
+                    <h4>Event Information</h4>
+                    <div class="hackathon-detail-meta">
+                        <div class="hackathon-detail-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span id="detailDate">Date</span>
+                        </div>
+                        <div class="hackathon-detail-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="detailLocation">Location</span>
+                        </div>
+                        <div class="hackathon-detail-meta-item">
+                            <i class="fas fa-globe"></i>
+                            <span id="detailMode">Mode</span>
+                        </div>
+                        <div class="hackathon-detail-meta-item">
+                            <i class="fas fa-trophy"></i>
+                            <span id="detailPrize">Prize</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hackathon-detail-description">
+                    <h4>Description</h4>
+                    <p id="detailDescription">Hackathon description will be displayed here.</p>
+                </div>
+            </div>
+            
+            <div class="hackathon-detail-themes" id="detailThemes">
+                <h4>Themes</h4>
+                <div class="hackathon-themes">
+                    <!-- Theme tags will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="hackathon-detail-actions">
+                <button class="btn" id="detailRegisterBtn">Register Now</button>
+                <button class="btn btn-secondary" id="detailWebsiteBtn">Visit Website</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hackathon data
+        const hackathonData = {
+            1: {
+                title: "AI Innovation Challenge",
+                organizer: "TechCorp India",
+                date: "Oct 15-17, 2023",
+                location: "Online",
+                mode: "Online",
+                prize: "₹8,30,000",
+                themes: ["AI", "Machine Learning", "Open Innovation"],
+                description: "Join us for the AI Innovation Challenge, a 48-hour hackathon focused on creating innovative solutions using artificial intelligence and machine learning. Participants will have the opportunity to work with cutting-edge AI technologies and mentorship from industry experts."
+            },
+            2: {
+                title: "Web3 Builders Weekend",
+                organizer: "Blockchain Academy",
+                date: "Nov 5-6, 2023",
+                location: "Bangalore",
+                mode: "Offline",
+                prize: "₹5,00,000",
+                themes: ["Web3", "Blockchain", "DeFi"],
+                description: "A weekend-long hackathon dedicated to building the future of the decentralized web. Create innovative dApps, smart contracts, and DeFi solutions with the support of blockchain experts and mentors."
+            },
+            3: {
+                title: "Sustainability Hack",
+                organizer: "GreenTech Initiative",
+                date: "Nov 18-20, 2023",
+                location: "Hybrid",
+                mode: "Hybrid",
+                prize: "₹12,50,000",
+                themes: ["Sustainability", "Climate Tech", "IoT"],
+                description: "Tackle environmental challenges with technology at the Sustainability Hack. This 3-day event brings together developers, designers, and environmental experts to create solutions for a more sustainable future."
+            },
+            4: {
+                title: "Student Innovation Fest",
+                organizer: "EduTech Foundation",
+                date: "Dec 2-3, 2023",
+                location: "Online",
+                mode: "Online",
+                prize: "₹3,00,000",
+                themes: ["Education", "Student Innovation", "Accessibility"],
+                description: "A hackathon exclusively for students to showcase their innovative ideas and technical skills. Create solutions that improve education, accessibility, and learning experiences for students worldwide."
+            },
+            5: {
+                title: "FinTech Revolution",
+                organizer: "Finance Innovation Lab",
+                date: "Dec 10-12, 2023",
+                location: "Mumbai",
+                mode: "Offline",
+                prize: "₹7,50,000",
+                themes: ["FinTech", "Payments", "Banking"],
+                description: "Revolutionize the financial industry with your innovative ideas at the FinTech Revolution hackathon. Build solutions that transform banking, payments, and financial services for the digital age."
+            }
+        };
+
+        // DOM elements
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const profileBtn = document.getElementById('profileBtn');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const notificationBtn = document.getElementById('notificationBtn');
+        const hackathonContainer = document.getElementById('hackathonContainer');
+        const prevHackathon = document.getElementById('prevHackathon');
+        const nextHackathon = document.getElementById('nextHackathon');
+        const winnersContainer = document.getElementById('winnersContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const postBtn = document.getElementById('postBtn');
+        const modal = document.getElementById('teamPostModal');
+        const modalClose = document.getElementById('modalClose');
+        const teamPostForm = document.getElementById('teamPostForm');
+        const hackathonDetailModal = document.getElementById('hackathonDetailModal');
+        const hackathonDetailClose = document.getElementById('hackathonDetailClose');
+        const detailTitle = document.getElementById('detailTitle');
+        const detailOrganizer = document.getElementById('detailOrganizer');
+        const detailDate = document.getElementById('detailDate');
+        const detailLocation = document.getElementById('detailLocation');
+        const detailMode = document.getElementById('detailMode');
+        const detailPrize = document.getElementById('detailPrize');
+        const detailDescription = document.getElementById('detailDescription');
+        const detailThemes = document.getElementById('detailThemes');
+        const detailRegisterBtn = document.getElementById('detailRegisterBtn');
+        const detailWebsiteBtn = document.getElementById('detailWebsiteBtn');
+        const hostForm = document.getElementById('hostForm');
+        const searchInput = document.querySelector('.search-input');
+
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Profile dropdown toggle
+        profileBtn.addEventListener('click', () => {
+            profileDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('active');
+            }
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('You have been logged out successfully');
+            // In a real app, you would redirect to login page or clear session
+        });
+
+        // Notification functionality
+        notificationBtn.addEventListener('click', () => {
+            alert('You have 3 new notifications');
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const hackathonCards = document.querySelectorAll('.hackathon-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                hackathonCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const mode = card.getAttribute('data-mode');
+                        const difficulty = card.getAttribute('data-difficulty');
+                        
+                        if (mode === filter || difficulty === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Hackathon carousel functionality
+        let hackathonSlidePosition = 0;
+        const hackathonSlideWidth = 366; // Card width + margin
+        
+        prevHackathon.addEventListener('click', () => {
+            if (hackathonSlidePosition > 0) {
+                hackathonSlidePosition -= hackathonSlideWidth;
+                hackathonContainer.style.transform = `translateX(-${hackathonSlidePosition}px)`;
+            }
+        });
+        
+        nextHackathon.addEventListener('click', () => {
+            const maxSlide = (hackathonContainer.children.length - 3) * hackathonSlideWidth;
+            if (hackathonSlidePosition < maxSlide) {
+                hackathonSlidePosition += hackathonSlideWidth;
+                hackathonContainer.style.transform = `translateX(-${hackathonSlidePosition}px)`;
+            }
+        });
+
+        // Auto-slide for hackathon carousel
+        setInterval(() => {
+            const maxSlide = (hackathonContainer.children.length - 3) * hackathonSlideWidth;
+            if (hackathonSlidePosition < maxSlide) {
+                hackathonSlidePosition += hackathonSlideWidth;
+            } else {
+                hackathonSlidePosition = 0;
+            }
+            hackathonContainer.style.transform = `translateX(-${hackathonSlidePosition}px)`;
+        }, 5000);
+
+        // Winners slider functionality
+        let slidePosition = 0;
+        const slideWidth = 316; // Card width + margin
+        
+        prevBtn.addEventListener('click', () => {
+            if (slidePosition > 0) {
+                slidePosition -= slideWidth;
+                winnersContainer.style.transform = `translateX(-${slidePosition}px)`;
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            const maxSlide = (winnersContainer.children.length - 3) * slideWidth;
+            if (slidePosition < maxSlide) {
+                slidePosition += slideWidth;
+                winnersContainer.style.transform = `translateX(-${slidePosition}px)`;
+            }
+        });
+
+        // Modal functionality for team post
+        postBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+        
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+        
+        teamPostForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would normally send the data to a server
+            alert('Your post has been submitted!');
+            modal.classList.remove('active');
+            teamPostForm.reset();
+        });
+
+        // Hackathon detail modal functionality
+        const viewDetailsBtns = document.querySelectorAll('.view-details');
+        viewDetailsBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.hackathon-card');
+                const hackathonId = card.getAttribute('data-id');
+                const data = hackathonData[hackathonId];
+                
+                // Populate modal with data
+                detailTitle.textContent = data.title;
+                detailOrganizer.textContent = data.organizer;
+                detailDate.textContent = data.date;
+                detailLocation.textContent = data.location;
+                detailMode.textContent = data.mode;
+                detailPrize.textContent = data.prize;
+                detailDescription.textContent = data.description;
+                
+                // Populate themes
+                const themesContainer = detailThemes.querySelector('.hackathon-themes');
+                themesContainer.innerHTML = '';
+                data.themes.forEach(theme => {
+                    const themeTag = document.createElement('span');
+                    themeTag.className = 'theme-tag';
+                    themeTag.textContent = theme;
+                    themesContainer.appendChild(themeTag);
+                });
+                
+                // Show modal
+                hackathonDetailModal.style.display = 'flex';
+            });
+        });
+        
+        // Register buttons
+        const registerBtns = document.querySelectorAll('.register-btn');
+        registerBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.hackathon-card');
+                const hackathonId = card.getAttribute('data-id');
+                const data = hackathonData[hackathonId];
+                
+                // Show registration confirmation
+                alert(`You are being redirected to register for ${data.title}!`);
+                // In a real application, this would redirect to the registration page
+            });
+        });
+        
+        // Close hackathon detail modal
+        hackathonDetailClose.addEventListener('click', () => {
+            hackathonDetailModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === hackathonDetailModal) {
+                hackathonDetailModal.style.display = 'none';
+            }
+        });
+        
+        // Detail modal buttons
+        detailRegisterBtn.addEventListener('click', () => {
+            alert('Redirecting to registration page...');
+            // In a real application, this would redirect to the registration page
+        });
+        
+        detailWebsiteBtn.addEventListener('click', () => {
+            alert('Redirecting to hackathon website...');
+            // In a real application, this would redirect to the hackathon website
+        });
+
+        // Host form submission
+        hostForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would normally send the data to a server
+            alert('Your hackathon submission has been received! We will contact you soon.');
+            hostForm.reset();
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filterHackathons(searchTerm);
+        });
+
+        function filterHackathons(searchTerm) {
+            const allCards = document.querySelectorAll('.hackathon-card');
+            
+            allCards.forEach(card => {
+                const title = card.querySelector('.hackathon-title').textContent.toLowerCase();
+                const organizer = card.querySelector('.hackathon-organizer').textContent.toLowerCase();
+                const themes = Array.from(card.querySelectorAll('.theme-tag')).map(tag => tag.textContent.toLowerCase());
+                
+                const isVisible = title.includes(searchTerm) || 
+                                  organizer.includes(searchTerm) || 
+                                  themes.some(theme => theme.includes(searchTerm));
+                
+                card.style.display = isVisible ? 'block' : 'none';
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 14, 26, 0.95)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.05)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -2160,22 +2160,26 @@
         // Add event listeners to navigation links
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = link.getAttribute('data-page');
-                if (pageId) {
+                // Only prevent default for links with data-page attribute (Home page)
+                if (link.getAttribute('data-page')) {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
                     showPage(pageId);
                 }
+                // Other links will redirect normally
             });
         });
         
         // Add event listeners to sidebar links
         sidebarLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = link.getAttribute('data-page');
-                if (pageId) {
+                // Only prevent default for links with data-page attribute (Home page)
+                if (link.getAttribute('data-page')) {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
                     showPage(pageId);
                 }
+                // Other links will redirect normally
             });
         });
         

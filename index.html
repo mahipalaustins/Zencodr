@@ -1102,10 +1102,11 @@
         </div>
         <nav class="nav-links">
             <a href="#" class="nav-link active" data-page="landing">Home</a>
-            <a href="#" class="nav-link" data-page="z-sports">Z-Sports</a>
-            <a href="#" class="nav-link" data-page="hackathon">Hackathon</a>
-            <a href="#" class="nav-link" data-page="jobs">Jobs</a>
-            <a href="#" class="nav-link" data-page="mentorship">Mentorship</a>
+            <a href="Z-sports.html" class="nav-link">Z-Sports</a>
+            <a href="hackathon.html" class="nav-link">Hackathon</a>
+            <a href="job.html" class="nav-link">Jobs</a>
+            <a href="mentorship.html" class="nav-link">Mentorship</a>
+            <a href="collab.html" class="nav-link">Collab Room</a>
         </nav>
         <div class="header-actions">
             <div class="search-bar">
@@ -1162,27 +1163,33 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link" data-page="z-sports">
+                <a href="Z-sports.html" class="sidebar-link">
                     <i class="fas fa-gamepad"></i>
                     <span>Z-Sports</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link" data-page="hackathon">
+                <a href="hackathon.html" class="sidebar-link">
                     <i class="fas fa-rocket"></i>
                     <span>Hackathon</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link" data-page="jobs">
+                <a href="job.html" class="sidebar-link">
                     <i class="fas fa-briefcase"></i>
                     <span>Jobs</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link" data-page="mentorship">
+                <a href="mentorship.html" class="sidebar-link">
                     <i class="fas fa-chalkboard-teacher"></i>
                     <span>Mentorship</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="collab.html" class="sidebar-link">
+                    <i class="fas fa-users"></i>
+                    <span>Collab Room</span>
                 </a>
             </li>
         </ul>
@@ -1222,7 +1229,7 @@
                             <span class="tag">#Real-time</span>
                         </div>
                         <div class="card-footer">
-                            <button class="btn">Learn More</button>
+                            <a href="collab.html" class="btn">Join Collab Room</a>
                         </div>
                     </div>
                     <div class="card">
@@ -1238,7 +1245,7 @@
                             <span class="tag">#Learning</span>
                         </div>
                         <div class="card-footer">
-                            <button class="btn">Learn More</button>
+                            <a href="mentorship.html" class="btn">Find a Mentor</a>
                         </div>
                     </div>
                     <div class="card">
@@ -1254,7 +1261,7 @@
                             <span class="tag">#Competitions</span>
                         </div>
                         <div class="card-footer">
-                            <button class="btn">Learn More</button>
+                            <a href="hackathon.html" class="btn">View Hackathons</a>
                         </div>
                     </div>
                     <div class="card">
@@ -2058,10 +2065,11 @@
                 <h3>Navigation</h3>
                 <ul class="footer-links">
                     <li class="footer-link"><a href="#" data-page="landing">Home</a></li>
-                    <li class="footer-link"><a href="#" data-page="z-sports">Z-Sports</a></li>
-                    <li class="footer-link"><a href="#" data-page="hackathon">Hackathon</a></li>
-                    <li class="footer-link"><a href="#" data-page="jobs">Jobs</a></li>
-                    <li class="footer-link"><a href="#" data-page="mentorship">Mentorship</a></li>
+                    <li class="footer-link"><a href="Z-sports.html">Z-Sports</a></li>
+                    <li class="footer-link"><a href="hackathon.html">Hackathon</a></li>
+                    <li class="footer-link"><a href="job.html">Jobs</a></li>
+                    <li class="footer-link"><a href="mentorship.html">Mentorship</a></li>
+                    <li class="footer-link"><a href="collab.html">Collab Room</a></li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -2154,7 +2162,9 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
-                showPage(pageId);
+                if (pageId) {
+                    showPage(pageId);
+                }
             });
         });
         
@@ -2163,7 +2173,9 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
-                showPage(pageId);
+                if (pageId) {
+                    showPage(pageId);
+                }
             });
         });
         
@@ -2172,7 +2184,9 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
-                showPage(pageId);
+                if (pageId) {
+                    showPage(pageId);
+                }
             });
         });
         
